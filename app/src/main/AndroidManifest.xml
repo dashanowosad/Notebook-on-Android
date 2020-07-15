@@ -18,6 +18,10 @@
         </activity>
         <activity android:name=".Menu">
         </activity>
+        <activity android:name=".Memo">
+        </activity>
+        <activity android:name=".List">
+        </activity>
     </application>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 </manifest>

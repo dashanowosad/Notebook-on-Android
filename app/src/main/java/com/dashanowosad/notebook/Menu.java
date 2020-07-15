@@ -7,16 +7,16 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Display;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
+
 
 
 public class Menu extends AppCompatActivity {
@@ -26,11 +26,13 @@ public class Menu extends AppCompatActivity {
     private Integer Heigt;
     private Integer Weight;
 
+
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
 
         this.DisplayMetricks();
         this.relativeLayout = new RelativeLayout(this);
@@ -51,7 +53,7 @@ public class Menu extends AppCompatActivity {
         TextView PaperTypeText = new TextView(this);
         PaperTypeText.setText("Выберите тип:");
         PaperTypeText.setTextSize(20);
-        PaperTypeText.setId(View.generateViewId());
+        PaperTypeText.setId(Integer.valueOf(1));
         PaperTypeText.setBackgroundColor(Color.rgb(168,255,210));
         RelativeLayout.LayoutParams paremsForTextType = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
@@ -61,13 +63,14 @@ public class Menu extends AppCompatActivity {
         //RadioGroup and RadioButton
         RadioGroup radioGroup = new RadioGroup(this);
         radioGroup.setOrientation(RadioGroup.VERTICAL);
-        radioGroup.setId(View.generateViewId());
+        radioGroup.setId(Integer.valueOf(2));
         radioGroup.setPadding(0,50,0,50);
 
-        AppCompatRadioButton Paper = new AppCompatRadioButton(this);
+        final AppCompatRadioButton Paper = new AppCompatRadioButton(this);
         Paper.setText("Заметка");
         Paper.setTextSize(18);
-        //Paper.setChecked(true);
+        Paper.setId(Integer.valueOf(3));
+        Paper.setChecked(true);
 
         AppCompatRadioButton List = new AppCompatRadioButton(this);
         List.setText("Список");
@@ -75,6 +78,9 @@ public class Menu extends AppCompatActivity {
 
         radioGroup.addView(Paper);
         radioGroup.addView(List);
+
+        //Listener RadioGroup
+
 
         //Change Color radio button
         Paper.setSupportButtonTintList(this.colorStateList);
@@ -103,7 +109,7 @@ public class Menu extends AppCompatActivity {
         TextView ColorTypeText = new TextView(this);
         ColorTypeText.setText("Выберите цвет заметки:");
         ColorTypeText.setTextSize(20);
-        ColorTypeText.setId(View.generateViewId());
+        ColorTypeText.setId(Integer.valueOf(5));
         ColorTypeText.setBackgroundColor(Color.rgb(168,255,210));
         RelativeLayout.LayoutParams paremsForTextType = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
@@ -122,6 +128,7 @@ public class Menu extends AppCompatActivity {
         for(int i = 0; i < 8; ++i)
             MassOfColor[i] = new AppCompatRadioButton(this);
 
+
         MassOfColor[0].setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.white), null);
         MassOfColor[1].setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.red), null);
         MassOfColor[2].setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.orange), null);
@@ -132,11 +139,17 @@ public class Menu extends AppCompatActivity {
         MassOfColor[7].setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.brown), null);
 
 
+
+        int k = 7;
         //Change Color radio button
         for(int i = 0; i < 8; ++i) {
             MassOfColor[i].setSupportButtonTintList(this.colorStateList);
             radioGroup.addView(MassOfColor[i]);
+            MassOfColor[i].setId(k);
+            ++k;
         }
+        MassOfColor[0].setChecked(true);
+
 
         RelativeLayout.LayoutParams paremsForRadioGroup = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
@@ -183,6 +196,38 @@ public class Menu extends AppCompatActivity {
         paramsForSaveButton.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 
         this.relativeLayout.addView(SaveButton, paramsForSaveButton);
+
+
+
+        SaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatRadioButton RadBut = findViewById(Integer.valueOf(3));
+                AppCompatRadioButton Color[] = new AppCompatRadioButton[8];
+
+                int k = 7, ColorChecked = 1;
+                for(int i = 0; i < 8; ++i) {
+                    Color[i] = findViewById(k);
+                    if(Color[i].isChecked())
+                        ColorChecked = k-6;
+                    ++k;
+                }
+
+                if(RadBut.isChecked()){
+                    Intent intent = new Intent(Menu.this, Memo.class);
+                    intent.putExtra("Color", ColorChecked);
+                    intent.putExtra("Weight", Weight);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(Menu.this, List.class);
+                    intent.putExtra("Color", ColorChecked);
+                    intent.putExtra("Weight", Weight);
+                    startActivity(intent);
+                }
+
+            }
+        });
     }
 
     private void DisplayMetricks(){
