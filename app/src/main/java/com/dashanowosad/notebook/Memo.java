@@ -1,4 +1,5 @@
 package com.dashanowosad.notebook;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Binder;
@@ -168,6 +169,15 @@ public class Memo extends AppCompatActivity {
 
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+
+
+        BaskBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Memo.this, Menu.class);
+                startActivity(intent);
+            }
+        });
 
         this.relativeLayout.addView(BaskBut, params);
     }
