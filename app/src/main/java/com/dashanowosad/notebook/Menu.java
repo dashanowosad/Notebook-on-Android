@@ -218,6 +218,7 @@ public class Menu extends AppCompatActivity {
                     Intent intent = new Intent(Menu.this, Memo.class);
                     intent.putExtra("Color", ColorChecked);
                     intent.putExtra("Weight", Weight);
+                    intent.putExtra("Height", Height);
                     startActivity(intent);
                 }
                 else{

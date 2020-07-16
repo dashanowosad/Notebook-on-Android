@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.os.Binder;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ public class Memo extends AppCompatActivity {
 
     private RelativeLayout relativeLayout;
     private Integer Weight;
+    private String color;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -38,13 +40,7 @@ public class Memo extends AppCompatActivity {
         this.Weight = (Integer) w.get("Weight");
 
         Bundle c = getIntent().getExtras();
-        String color = c.get("Color").toString();
-        TextView textViewForColor = new TextView(this);
-        textViewForColor.setId(Integer.valueOf(3));
-        textViewForColor.setText(color);
-        textViewForColor.setTextColor(Color.WHITE);
-       this.relativeLayout.addView(textViewForColor);
-
+        this.color = c.get("Color").toString();
 
         this.TextOfMemo(this.Title());
         this.SaveBut();
@@ -75,6 +71,7 @@ public class Memo extends AppCompatActivity {
         editText.setTextSize(18);
         editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         editText.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        editText.setHorizontalScrollBarEnabled(true);
         editText.setId(Integer.valueOf(2));
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -99,11 +96,11 @@ public class Memo extends AppCompatActivity {
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
+
         SaveBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                TextView textViewForColor = findViewById(Integer.valueOf(3));
                 EditText textTitle = findViewById(Integer.valueOf(1));
                 EditText textNote = findViewById(Integer.valueOf(2));
 
@@ -115,7 +112,7 @@ public class Memo extends AppCompatActivity {
 
                 Note note = new Note();
                 note = realm.createObject(Note.class);
-                note.SetColor(this.SetColor((String) textViewForColor.getText()));
+                note.SetColor(this.SetColor(Memo.this.color));
                 note.SetTitle(String.valueOf(textTitle.getText()));
                 note.SetNote(String.valueOf(textNote.getText()));
 
