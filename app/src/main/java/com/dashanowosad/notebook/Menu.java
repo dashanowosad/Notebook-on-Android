@@ -7,7 +7,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
@@ -17,13 +16,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
 
+import java.util.ArrayList;
 
 
 public class Menu extends AppCompatActivity {
 
     private RelativeLayout relativeLayout;
     private ColorStateList colorStateList;
-    private Integer Heigt;
+    private Integer Height;
     private Integer Weight;
 
 
@@ -124,6 +124,7 @@ public class Menu extends AppCompatActivity {
         radioGroup.setPadding(0,70,0,0);
 
         AppCompatRadioButton [] MassOfColor = new AppCompatRadioButton[8];
+
 
         for(int i = 0; i < 8; ++i)
             MassOfColor[i] = new AppCompatRadioButton(this);
@@ -233,7 +234,7 @@ public class Menu extends AppCompatActivity {
     private void DisplayMetricks(){
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
 
-        this.Heigt = displayMetrics.heightPixels;
+        this.Height = displayMetrics.heightPixels;
         this.Weight = displayMetrics.widthPixels;
     }
 }

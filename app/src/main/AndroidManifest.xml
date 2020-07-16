@@ -18,9 +18,11 @@
         </activity>
         <activity android:name=".Menu">
         </activity>
-        <activity android:name=".Memo">
+        <activity android:name=".Memo"
+            android:windowSoftInputMode="adjustPan">
         </activity>
-        <activity android:name=".List">
+        <activity android:name=".List"
+            android:windowSoftInputMode="adjustPan">
         </activity>
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

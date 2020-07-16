@@ -5,14 +5,14 @@ import io.realm.RealmObject;
 import io.realm.annotations.Required;
 
 public class Note extends RealmObject {
-    @Required //не может быть пустым
+
     private String Title;
 
     private String Note;
 
     private RealmList <String> List;
 
-    @Required
+    @Required //не может быть пустым
     private String Color;
 
     public Note(){

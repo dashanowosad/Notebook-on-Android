@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         this.Print();
+        this.DellAll();
 
         setContentView(this.relativeLayout);
 
